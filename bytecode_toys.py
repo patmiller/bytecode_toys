@@ -364,6 +364,10 @@ def __cache_globals__(co,func_globals):
             const = func_globals.get(arg,missing)
             if const is not missing:
                 code.code[pc] = (LOAD_CONST,const)
+            else:
+                const = __builtins__.get(arg,missing)
+                if const is not missing:
+                    code.code[pc] = (LOAD_CONST,const)
 
         elif op == LOAD_ATTR:
             prev_op,prev_arg = code.code[pc-1]
